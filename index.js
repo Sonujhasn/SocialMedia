@@ -1,9 +1,27 @@
-const app= require("./backend/app")
+
 const express = require("express");
-const { connectDatabse } = require("./backend/config/database")
+const { connectDatabse } = require("./config/database")
+
+const express =require("express")
+const cookieParser = require("cookie-parser")
+const app=express();
+
+
+
+//using middleware
+app.use(express.json({limit:'50mb'}));
+app.use(express.urlencoded({limit:'50mb',extended:true}))
+app.use(cookieParser())
+
+//importing routes
+const post=require("./routes/post")
+const user=require("./routes/user")
+
+//using routes
+app.use("/api/v1",user)
+app.use("/api/v1",post)
 
 const cloudinary = require("cloudinary")
-const ap = express();
 const path = require("path");
 connectDatabse()
 
@@ -14,9 +32,9 @@ cloudinary.config({
 })
 
 
-ap.use(express.static(path.join(__dirname, "./frontend/build")));
+app.use(express.static(path.join(__dirname, "./frontend/build")));
 
-ap.get("*", function (req, res) {
+app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
 });
 
