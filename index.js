@@ -1,5 +1,4 @@
 
-const express = require("express");
 const { connectDatabse } = require("./config/database")
 
 const express =require("express")
