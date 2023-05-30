@@ -3,7 +3,7 @@ const express = require("express");
 const { connectDatabse } = require("./backend/config/database")
 
 const cloudinary = require("cloudinary")
-const app = express();
+const ap = express();
 const path = require("path");
 connectDatabse()
 
@@ -14,9 +14,9 @@ cloudinary.config({
 })
 
 
-app.use(express.static(path.join(__dirname, "./frontend/build")));
+ap.use(express.static(path.join(__dirname, "./frontend/build")));
 
-app.get("*", function (req, res) {
+ap.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
 });
 
